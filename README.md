@@ -1,2 +1,0 @@
-# gradeCalculator
-Calculate grade assignment
