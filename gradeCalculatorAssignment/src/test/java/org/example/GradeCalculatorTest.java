@@ -30,4 +30,12 @@ class GradeCalculatorTest {
         assertFalse(grade.getCumLaude());
     }
 
+    @Test
+    void cumLaudeGradeTest() {
+        Grade grade = GradeCalculator.computeGrade(60,10.0F);
+        assertTrue(grade.getApproved());
+        assertEquals(30,grade.getNumericGrade());
+        assertTrue(grade.getCumLaude());
+    }
+
 }

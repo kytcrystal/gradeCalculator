@@ -3,6 +3,7 @@ package org.example;
 public class Grade {
     private Integer numericGrade;
     private boolean gradeApproved;
+    private boolean cumLaude;
 
     public boolean getApproved() {
         return gradeApproved;
@@ -21,7 +22,10 @@ public class Grade {
     }
 
     public boolean getCumLaude() {
-        return false;
+        return cumLaude;
     }
 
+    public void setCumLaude(boolean isCumLaude) {
+        this.cumLaude = isCumLaude;
+    }
 }

@@ -7,20 +7,27 @@ public class GradeCalculator {
         float finalLabPoints = (float) (labPoints * 15) / 50;
         float finalExamGrade = examGrade * 15 / 10;
         float finalGrade = finalLabPoints + finalExamGrade;
-        determineApprovedAndNumericGrade(finalGrade, grade);
+        determineApprovedGrade(finalGrade, grade);
+        determineNumericGrade(finalGrade,grade);
+        determineCumLaude(finalGrade,grade);
         return grade;
     }
 
-    private static void determineApprovedAndNumericGrade(float finalGrade, Grade grade) {
+    private static void determineApprovedGrade(float finalGrade, Grade grade) {
+        grade.setApproved(finalGrade>=18);
+    }
+    private static void determineNumericGrade(float finalGrade, Grade grade) {
         if (finalGrade<18) {
-            grade.setApproved(false);
             grade.setNumericGrade(null);
         } else if (finalGrade>30) {
-            grade.setApproved(true);
             grade.setNumericGrade(30);
         } else {
-            grade.setApproved(true);
             grade.setNumericGrade((int) finalGrade);
         }
     }
+    private static void determineCumLaude(float finalGrade, Grade grade) {
+        grade.setCumLaude(finalGrade > 30);
+    }
+
+
 }
