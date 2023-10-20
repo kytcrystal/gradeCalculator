@@ -14,5 +14,14 @@ class GradeCalculatorTest {
         assertFalse(grade.getCumLaude());
     }
 
+    @Test
+    void minimumPassGradeTest() {
+        Grade grade = GradeCalculator.calculateGrade(50,2.0F);
+        assertTrue(grade.getApproved());
+        assertEquals(18,grade.getNumericGrade());
+        assertFalse(grade.getCumLaude());
+    }
+
+    
 
 }
