@@ -8,7 +8,7 @@ class GradeCalculatorTest {
 
     @Test
     void fullGradeTest() {
-        Grade grade = GradeCalculator.calculateGrade(50,10.0F);
+        Grade grade = GradeCalculator.computeGrade(50,10.0F);
         assertTrue(grade.getApproved());
         assertEquals(30,grade.getNumericGrade());
         assertFalse(grade.getCumLaude());
@@ -16,12 +16,18 @@ class GradeCalculatorTest {
 
     @Test
     void minimumPassGradeTest() {
-        Grade grade = GradeCalculator.calculateGrade(50,2.0F);
+        Grade grade = GradeCalculator.computeGrade(50,2.0F);
         assertTrue(grade.getApproved());
         assertEquals(18,grade.getNumericGrade());
         assertFalse(grade.getCumLaude());
     }
 
-    
+    @Test
+    void zeroGradeTest() {
+        Grade grade = GradeCalculator.computeGrade(0,0.0F);
+        assertFalse(grade.getApproved());
+        assertNull(grade.getNumericGrade());
+        assertFalse(grade.getCumLaude());
+    }
 
 }
