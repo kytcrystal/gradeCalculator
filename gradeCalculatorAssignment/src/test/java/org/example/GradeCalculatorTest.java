@@ -38,4 +38,13 @@ class GradeCalculatorTest {
         assertTrue(grade.getCumLaude());
     }
 
+    @Test
+    void exceedingLabPointsWithoutCumLaudeTest() {
+        Grade grade = GradeCalculator.computeGrade(60,8.0F);
+        assertTrue(grade.getApproved());
+        assertEquals(29,grade.getNumericGrade());
+        assertFalse(grade.getCumLaude());
+    }
+
+
 }
