@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class GradeCalculatorTest {
 
     @Test
-    void fullGradeTest() {
+    void fullGradeTest() throws Exception {
         Grade grade = GradeCalculator.computeGrade(50,10.0F);
         assertTrue(grade.getApproved());
         assertEquals(30,grade.getNumericGrade());
@@ -16,7 +16,7 @@ class GradeCalculatorTest {
     }
 
     @Test
-    void minimumPassGradeTest() {
+    void minimumPassGradeTest() throws Exception {
         Grade grade = GradeCalculator.computeGrade(50,2.0F);
         assertTrue(grade.getApproved());
         assertEquals(18,grade.getNumericGrade());
@@ -24,7 +24,7 @@ class GradeCalculatorTest {
     }
 
     @Test
-    void zeroGradeTest() {
+    void zeroGradeTest() throws Exception {
         Grade grade = GradeCalculator.computeGrade(0,0.0F);
         assertFalse(grade.getApproved());
         assertNull(grade.getNumericGrade());
@@ -32,7 +32,7 @@ class GradeCalculatorTest {
     }
 
     @Test
-    void cumLaudeGradeTest() {
+    void cumLaudeGradeTest() throws Exception {
         Grade grade = GradeCalculator.computeGrade(60,10.0F);
         assertTrue(grade.getApproved());
         assertEquals(30,grade.getNumericGrade());
@@ -40,7 +40,7 @@ class GradeCalculatorTest {
     }
 
     @Test
-    void exceedingLabPointsWithoutCumLaudeTest() {
+    void exceedingLabPointsWithoutCumLaudeTest() throws Exception {
         Grade grade = GradeCalculator.computeGrade(60,8.0F);
         assertTrue(grade.getApproved());
         assertEquals(29,grade.getNumericGrade());
@@ -48,7 +48,7 @@ class GradeCalculatorTest {
     }
 
     @Test
-    void exceedingLabPointsAboveMaximumTest() {
+    void exceedingLabPointsAboveMaximumTest() throws Exception {
         Grade grade = GradeCalculator.computeGrade(70,6.0F);
         assertTrue(grade.getApproved());
         assertEquals(27,grade.getNumericGrade());
@@ -56,7 +56,7 @@ class GradeCalculatorTest {
     }
 
     @Test
-    void exceedingLabPointWithCumLaudeTest() {
+    void exceedingLabPointWithCumLaudeTest() throws Exception {
         Grade grade = GradeCalculator.computeGrade(51,10.0F);
         assertTrue(grade.getApproved());
         assertEquals(30,grade.getNumericGrade());
@@ -64,7 +64,7 @@ class GradeCalculatorTest {
     }
 
     @Test
-    void gradeRoundedDownTest() {
+    void gradeRoundedDownTest() throws Exception {
         Grade grade = GradeCalculator.computeGrade(23,10.0F);
         //finalLabPoints = 6.9, finalGrade = 21.9
         assertTrue(grade.getApproved());
@@ -73,7 +73,7 @@ class GradeCalculatorTest {
     }
 
     @Test
-    void gradeRoundedNormallyUpTest() {
+    void gradeRoundedNormallyUpTest() throws Exception {
         Grade grade = GradeCalculator.computeGrade(26,10.0F);
         //finalLabPoints = 7.8, finalGrade = 22.8
         assertTrue(grade.getApproved());
@@ -82,7 +82,7 @@ class GradeCalculatorTest {
     }
 
     @Test
-    void gradeRoundedNormallyDownTest() {
+    void gradeRoundedNormallyDownTest() throws Exception {
         Grade grade = GradeCalculator.computeGrade(27,10.0F);
         //finalLabPoints = 8.1, finalGrade = 23.1
         assertTrue(grade.getApproved());
@@ -91,7 +91,7 @@ class GradeCalculatorTest {
     }
 
     @Test
-    void gradeRoundedUpTest() {
+    void gradeRoundedUpTest() throws Exception {
         Grade grade = GradeCalculator.computeGrade(41,10.0F);
         //finalLabPoints = 12.3, finalGrade = 27.3
         assertTrue(grade.getApproved());
@@ -101,7 +101,7 @@ class GradeCalculatorTest {
 
     @Test
     @Disabled
-    void exceedingLabPointsAboveMaximumWithCumLaudeTest() {
+    void exceedingLabPointsAboveMaximumWithCumLaudeTest() throws Exception {
         Grade grade = GradeCalculator.computeGrade(66,8.0F);
         assertTrue(grade.getApproved());
         assertEquals(30,grade.getNumericGrade());
@@ -110,11 +110,33 @@ class GradeCalculatorTest {
 
     @Test
     @Disabled
-    void exceedingLabPointWithoutCumLaudeTest() {
+    void exceedingLabPointWithoutCumLaudeTest() throws Exception {
         Grade grade = GradeCalculator.computeGrade(51,8.0F);
         assertTrue(grade.getApproved());
         assertEquals(27,grade.getNumericGrade());
         assertFalse(grade.getCumLaude());
+    }
+
+    @Test
+    void negativeLabPointsTest() {
+        assertThrows(Exception.class, () -> {
+            GradeCalculator.computeGrade(-1,8.0F);
+        });
+    }
+
+    @Test
+    void negativeExamGradeTest() {
+        assertThrows(Exception.class, () -> {
+            GradeCalculator.computeGrade(50,-1.0F);
+        });
+
+    }
+
+    @Test
+    void aboveLimitExamGradeTest() {
+        assertThrows(Exception.class, () -> {
+            GradeCalculator.computeGrade(10,20.0F);
+        });
     }
 
 

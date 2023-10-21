@@ -12,7 +12,10 @@ public class GradeCalculator {
 
 
 
-    public static Grade computeGrade(int labPoints, float examGrade) {
+    public static Grade computeGrade(int labPoints, float examGrade) throws Exception {
+        if (!validateInputs(labPoints,examGrade)) {
+            throw new Exception("Value out of range");
+        }
         Grade grade = new Grade();
         Dictionary<String, Integer> labPointsDict = computeLabPoints(labPoints);
         float finalLabPoints = (float) (labPointsDict.get("ComputedLabPoints") * MAX_TOTAL_GRADE/2) / FULL_LAB_POINTS;
@@ -23,6 +26,11 @@ public class GradeCalculator {
         determineCumLaude(finalGrade, grade,labPointsDict.get("UnusedLabPoints"));
         return grade;
     }
+
+    public static boolean validateInputs(int labPoints, float examGrade) {
+        return labPoints >= 0 && examGrade >= 0 && examGrade <= 10;
+    }
+
 
     public static Dictionary<String, Integer> computeLabPoints(int labPoints) {
         Dictionary<String, Integer> labPointsDictionary = new Hashtable<>();
