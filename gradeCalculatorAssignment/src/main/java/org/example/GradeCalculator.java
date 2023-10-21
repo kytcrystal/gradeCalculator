@@ -12,17 +12,22 @@ public class GradeCalculator {
     public static Grade computeGrade(int labPoints, float examGrade) {
         Grade grade = new Grade();
         int extraExamGrade = 0;
+        int unusedLabPoints = 0;
         if (labPoints > FULL_LAB_POINTS) {
             int extraLabPoints = labPoints - FULL_LAB_POINTS;
             extraExamGrade = (int) Math.floor((double) extraLabPoints / 5);
+            if (extraExamGrade>3) {
+                extraExamGrade = 3;
+            }
             labPoints = FULL_LAB_POINTS;
+            unusedLabPoints = extraLabPoints - extraExamGrade*5;
         }
         float finalLabPoints = (float) (labPoints * MAX_TOTAL_GRADE/2) / FULL_LAB_POINTS;
         float finalExamGrade = examGrade * (MAX_TOTAL_GRADE/2) / FULL_EXAM_GRADE;
-        float finalGrade = (float) finalLabPoints + finalExamGrade + (int) extraExamGrade;
+        float finalGrade = finalLabPoints + finalExamGrade + extraExamGrade;
         determineApprovedGrade(finalGrade, grade);
         determineNumericGrade(finalGrade, grade);
-        determineCumLaude(finalGrade, grade);
+        determineCumLaude(finalGrade, grade,unusedLabPoints);
         return grade;
     }
 
@@ -41,8 +46,8 @@ public class GradeCalculator {
         grade.setApproved(finalGrade>=MIN_APPROVED_GRADE);
     }
 
-    private static void determineCumLaude(float finalGrade, Grade grade) {
-        grade.setCumLaude(finalGrade > MAX_TOTAL_GRADE);
+    private static void determineCumLaude(float finalGrade, Grade grade, int unusedLabPoints) {
+        grade.setCumLaude((finalGrade > MAX_TOTAL_GRADE) || (finalGrade == MAX_TOTAL_GRADE && unusedLabPoints > 0));
     }
 
 

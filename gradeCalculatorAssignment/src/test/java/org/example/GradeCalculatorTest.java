@@ -1,5 +1,6 @@
 package org.example;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -43,6 +44,31 @@ class GradeCalculatorTest {
         Grade grade = GradeCalculator.computeGrade(60,8.0F);
         assertTrue(grade.getApproved());
         assertEquals(29,grade.getNumericGrade());
+        assertFalse(grade.getCumLaude());
+    }
+
+    @Test
+    void exceedingLabPointsAboveMaximumTest() {
+        Grade grade = GradeCalculator.computeGrade(70,6.0F);
+        assertTrue(grade.getApproved());
+        assertEquals(27,grade.getNumericGrade());
+        assertFalse(grade.getCumLaude());
+    }
+
+    @Test
+    void exceedingLabPointWithCumLaudeTest() {
+        Grade grade = GradeCalculator.computeGrade(51,10.0F);
+        assertTrue(grade.getApproved());
+        assertEquals(30,grade.getNumericGrade());
+        assertTrue(grade.getCumLaude());
+    }
+
+    @Test
+    @Disabled
+    void exceedingLabPointWithoutCumLaudeTest() {
+        Grade grade = GradeCalculator.computeGrade(51,8.0F);
+        assertTrue(grade.getApproved());
+        assertEquals(27,grade.getNumericGrade());
         assertFalse(grade.getCumLaude());
     }
 
